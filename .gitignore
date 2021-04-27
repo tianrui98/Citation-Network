@@ -1,2 +1,6 @@
 __pycache__/
-
+.vscode/
+.env
+output/
+test/test_output/
+.DS_Store

@@ -14,7 +14,7 @@ def RunDomain (df, df_whole, dm_dict,save_path,save_path_master,endyear, normali
     matrix = CreateMatrix()
     WriteLog (save_path_master,'1', None)
     if dm_dict == None:
-        var_pt = input("Do you want to create a new patent-domain dictionary? (Y/N): ")
+        var_pt = input("Do you want to create a new patent-domain dictionary? (Y/N): ").strip().upper()
         if var_pt == "Y":
             print("Creating patent-domain dictionary...")
             dm_dict = CreateDomainDictionary(df_whole)
@@ -41,7 +41,7 @@ def RunDomain (df, df_whole, dm_dict,save_path,save_path_master,endyear, normali
     if len(unknown) > 0:
         SaveUnknownPatents (unknown,save_path)
         print(str(len(unknown)) + " patents have no match in current dataset. List exported to Output folder.")
-        proceed_pt = input("Do you want to save the matrix with incomplete data?(Y/N): ")
+        proceed_pt = input("Do you want to save the matrix with incomplete data?(Y/N): ").strip().upper()
 
     elif len(unknown) == 0:
         print("All the cited patents have been assigned technology domains.")
@@ -65,7 +65,7 @@ def RunDomain (df, df_whole, dm_dict,save_path,save_path_master,endyear, normali
             if len(unknown) > 0:
                 SaveUnknownPatents (unknown,save_path)
                 print(str(len(unknown)) + " patents have no match in current dataset. List exported to Output folder.")
-                proceed_pt = input("Do you want to save the matrix with incomplete data?(Y/N): ")
+                proceed_pt = input("Do you want to save the matrix with incomplete data?(Y/N): ").strip().upper()
 
             elif len(unknown) == 0:
                 print("All the cited patents have been assigned domain information.")

@@ -17,7 +17,7 @@ def CreateAssigneeMatrix (df, setting = None):
         asn_list = row['Current assignees'].split('\n')
         if asn_list[0] != 'nan':
             for a in asn_list:
-                citation = len(row['Citing patents - Standardized publication number-ALL'].split('\n'))
+                citation = len(row['Citing patents - Standardized publication number'].split('\n'))
                 if a not in assignees_dict.keys():
                     assignees_dict[a] = [citation]
                     assignees.append(a)
@@ -32,7 +32,7 @@ def CreateAssigneeMatrix (df, setting = None):
         chosen = []
         con = False
 
-        extra =  input("Do you want to add more applicants based on other criteria? (Y/N): ")
+        extra =  input("Do you want to add more applicants based on other criteria? (Y/N): ").strip().upper()
         if extra == "Y":
             con = False
         if extra == "N":
@@ -55,14 +55,14 @@ def CreateAssigneeMatrix (df, setting = None):
                         chosen.append(a)
                         break
             
-            proceed = input(str(len(chosen)) + " applicants have been selected. Proceed to add them to the matrix? (Y/N): ")        
+            proceed = input(str(len(chosen)) + " applicants have been selected. Proceed to add them to the matrix? (Y/N): ").strip().upper()        
             if proceed == "Y":
                 con = True
                 
             else:
                 con = False
                 print("Adjust the parameters.\n")
-        save_setting = input ("Do you want to save the parameters for other assignee analysis? (Y/N): ")
+        save_setting = input ("Do you want to save the parameters for other assignee analysis? (Y/N): ").strip().upper()
         if save_setting == "Y":
             setting = {}
             setting["top_assignees_number"] = number
@@ -113,7 +113,7 @@ def MatchExistingPatentsAssignee (df,matrix,input_analysis,endyear, normalize):
         assignee_count[an]= 0
     if input_analysis == '2':
         direction = 'Cited'
-        EAfilter = '-ALL'
+        EAfilter = ''
     elif input_analysis == '3':
         direction = 'Cited'
         EAfilter = '-EXAMINER'
@@ -122,7 +122,7 @@ def MatchExistingPatentsAssignee (df,matrix,input_analysis,endyear, normalize):
         EAfilter = '-APPLICANT'
     elif input_analysis == '5':
         direction = "Citing"
-        EAfilter = '-ALL'
+        EAfilter = ''
     elif input_analysis == '6':
         direction = "Citing"
         EAfilter = '-EXAMINER'
@@ -144,9 +144,10 @@ def MatchExistingPatentsAssignee (df,matrix,input_analysis,endyear, normalize):
 
         if normalize == "Y":
             year = row['datetime'].year
-            denominator = float(endyear-year +1)
+            denominator = float(endyear- year) +1.0
         else:
-            denominator = 1
+            denominator = 1.0
+
         for oa in own_assignees:
             if oa != 'nan':
                 if (oa in matrix.keys()):

@@ -68,29 +68,29 @@ def SelectColumns (files_path):
         assert(examiner_col != applicant_col)   
         assert(both_col != examiner_col)
         assert(both_col != applicant_col)
-        col_dict ={ "APPLICANT":applicant_col, "EXAMINER": examiner_col ,  "ALL": both_col}
+        col_dict ={ "-APPLICANT":applicant_col, "-EXAMINER": examiner_col ,  "": both_col}
         for key in col_dict.keys():
             match = re.search("[1-9]", col_dict[key])
             if match is not None:
                 number = match.group(0)
                 if "Cited" in c[0]:
-                    rename['Cited patents - Standardized publication number'+'.'+str(number)] = str('Cited patents - Standardized publication number-'+ key)
-                    rename['Cited patents - Applicant/assignee'+'.'+str(number)] = str('Cited patents - Applicant/assignee-'+ key)
+                    rename['Cited patents - Standardized publication number'+'.'+str(number)] = str('Cited patents - Standardized publication number'+ key)
+                    rename['Cited patents - Applicant/assignee'+'.'+str(number)] = str('Cited patents - Applicant/assignee'+ key)
                     # rename['Cited patents - By Examiner, applicant'+'.'+str(number)] = str('Cited patents - By Examiner, applicant-'+key)
                 elif "Citing" in c[0]:
-                    rename['Citing patents - Standardized publication number'+'.'+str(number)] = str('Citing patents - Standardized publication number-'+key)
-                    rename['Citing patents - Applicant/assignee'+'.'+str(number)] = str('Citing patents - Applicant/assignee-'+key)
+                    rename['Citing patents - Standardized publication number'+'.'+str(number)] = str('Citing patents - Standardized publication number'+key)
+                    rename['Citing patents - Applicant/assignee'+'.'+str(number)] = str('Citing patents - Applicant/assignee'+key)
                     # rename['Citing patents - By Examiner, applicant'+'.'+str(number)] = str('Citing patents - By Examiner, applicant-'+key)
                 else:
                     sys.exit("Error occurred during renaming.")
             else:
                 if "Cited" in c[0]:
-                    rename['Cited patents - Standardized publication number'] = str('Cited patents - Standardized publication number-'+ key)
-                    rename['Cited patents - Applicant/assignee'] = str('Cited patents - Applicant/assignee-'+ key)
+                    rename['Cited patents - Standardized publication number'] = str('Cited patents - Standardized publication number'+ key)
+                    rename['Cited patents - Applicant/assignee'] = str('Cited patents - Applicant/assignee'+ key)
                     # rename['Cited patents - By Examiner, applicant'] = str('Cited patents - By Examiner, applicant-'+ key)
                 elif "Citing" in c[0]:
-                    rename['Citing patents - Standardized publication number'] = str('Citing patents - Standardized publication number-'+ key)
-                    rename['Citing patents - Applicant/assignee'] = str('Citing patents - Applicant/assignee-'+ key)
+                    rename['Citing patents - Standardized publication number'] = str('Citing patents - Standardized publication number'+ key)
+                    rename['Citing patents - Applicant/assignee'] = str('Citing patents - Applicant/assignee'+ key)
                     # rename['Citing patents - By Examiner, applicant'] = str('Citing patents - By Examiner, applicant-'+ key)
                 else:
                     sys.exit("Error occurred during renaming.")

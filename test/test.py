@@ -1,3 +1,7 @@
+"""
+Run main functionality with user inputs.
+Results are under test_output
+"""
 #%% Set-up
 import sys, os
 #%% Set-up

@@ -3,14 +3,14 @@ Run modules in sequence
 """
 
 from lib.default import *
-from lib.read_data import GetCSV, GetXLSX, CheckColumns
+from lib.read_data import GetCSV, GetXLSX, CheckColumns, AddDatetime
 from lib.merge import SelectColumns,MergeFiles,SaveDataset
 from lib.citeflow import CleanMatrix, CreateCiteFlowMatrix,SaveCiteFlowMatrix
 from lib.run_domain import RunDomain
 from lib.run_inventor import RunInventor
 from lib.run_assignee import RunAssignee
 from lib.log import WriteYear
-from lib.yearblock import YearSegment
+from lib.yearblock import YearSegment,CheckYears
 from lib.clean_companies import ChangeSubsidiaryNamesDF
 from lib.graphs import GenerateHeatMap
 
@@ -18,48 +18,54 @@ def RunAll (save_path):
     save_path_master = save_path
 
     #retrieve dataset
-    havedataset = input("Do you have a dataset ready for analysis? (Y/N): ") 
+    havedataset = input("Do you have a dataset ready for analysis? (Y/N): ").strip().upper()
     if havedataset == "Y" :
-        datatype = input("What is the extension of the dataset?:\n1. csv\n2.xlsx\n")
-        if datatype == "1":
-            df = GetCSV()
+        file_path = input("Enter the path to the file (including extension):\n").strip()
+        if ".csv" in file_path:
+            df = GetCSV(file_path)
+        elif ".xlsx" in file_path:
+            df = GetXLSX(file_path)
         else:
-            df = GetXLSX()
+            sys.exit("This type of file is not supported.")
+
         CheckColumns(df)
         df = ChangeSubsidiaryNamesDF (df)
+        df = AddDatetime(df)
 
     #merge excel files to obtain dataset
     else:
-        files_path = input("Enter the path to the folder containing the excel sheets:\n")
-        download_prompt = input("Do you want to save the merged dataset? (Y/N): ")
+        files_path = input("Enter the path to the folder containing the excel sheets:\n").strip()
+        download_prompt = input("Do you want to save the merged dataset? (Y/N): ").strip().upper()
         if download_prompt == "Y":
-            name = input("\nGive the dataset a name(without extension): ")
+            name = input("\nGive the dataset a name(without extension): ").strip()
         print("Selecting relevant columns...")
         relevant_cols, rename = SelectColumns(files_path)
         print("Merging excel files...")
         df = MergeFiles (files_path,relevant_cols, rename)
         df = ChangeSubsidiaryNamesDF (df)
+        df = AddDatetime(df)
         if download_prompt == "Y":
-            SaveDataset (df,save_path,name)
+            SaveDataset (df,save_path_master,name)
     
     #save a copy of the complete df
     df['unknown_patents'] = "nan"
     df_whole = df
 
     #divide dataset into n-year blocks
-    segmentbyyear = input("Do you want to segment the dataset by year? (Y/N): ")
+    segmentbyyear = input("Do you want to segment the dataset by year? (Y/N): ").strip().upper()
     if segmentbyyear == "Y":
-        year_blocks,endyear = YearSegment(df)
+        earliest,latest,num,size,maxyear = CheckYears(df)
+        year_blocks,endyear = YearSegment(df,earliest,latest,num,size,maxyear)
     else:
         year_blocks = [("all_years",df)]
-        endyear = now
+        endyear = now.year
     
-    normalize = input("Normalize citation numbers by year? (Y/N): ")
+    normalize = input("Normalize citation numbers by year? (Y/N): ").strip().upper()
    
-    use_count = input("Make citation matrix from:\n1: actual number of citations\n2: CiteFlow\n ")
+    use_count = input("Make citation matrix from:\n1: actual number of citations\n2: CiteFlow\n").strip().upper()
 
     #if heap map should be created for all analysis
-    create_graph = input("Do you want to create heap maps from citation matrices? (Y/N): ")
+    create_graph = input("Do you want to create heap maps from citation matrices? (Y/N): ").strip().upper()
  
      #Choose type of analysis
     input_list = AnalysisType ()

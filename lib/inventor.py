@@ -16,7 +16,7 @@ def CreateInventorMatrix (df, setting = None):
         inventor_list = row['Inventors'].split('\n')
         if inventor_list[0] != 'nan':
             for a in inventor_list:
-                citation = len(row['Citing patents - Standardized publication number-ALL'].split('\n'))
+                citation = len(row['Citing patents - Standardized publication number'].split('\n'))
                 if a not in inventors_dict.keys():
                     inventors_dict[a] = [citation]
                     inventors.append(a)
@@ -144,7 +144,7 @@ def MatchExistingPatentsInventor (df,inventors_dict,matrix,endyear, normalize):
         cited_inventors=[]
         unknown_patents = []
         known_patents = []
-        cited_ls = row['Cited patents - Standardized publication number-ALL']
+        cited_ls = row['Cited patents - Standardized publication number']
         cited_items_raw = cited_ls.split('\n')
         cited_items_trimmed =[]
     
@@ -169,9 +169,9 @@ def MatchExistingPatentsInventor (df,inventors_dict,matrix,endyear, normalize):
         
         if normalize == "Y":
             year = row['datetime'].year
-            denominator = float(endyear-year +1)
+            denominator = float(endyear- year) +1.0
         else:
-            denominator = 1
+            denominator = 1.0
         
         #Add to the Matrix
         for oi in own_inventors:

@@ -68,7 +68,7 @@ def MatchExistingPatents (df,dm_dict,matrix,endyear, normalize):
         cited_domains=[]
         unknown_patents = []
         known_patents = []
-        cited_ls = row['Cited patents - Standardized publication number-ALL']
+        cited_ls = row['Cited patents - Standardized publication number']
         cited_items_raw = cited_ls.split('\n')
         cited_items_trimmed =[]
     
@@ -94,9 +94,9 @@ def MatchExistingPatents (df,dm_dict,matrix,endyear, normalize):
         
         if normalize == "Y":
             year = row['datetime'].year
-            denominator = float(endyear-year +1)
+            denominator = float(endyear- year) +1.0
         else:
-            denominator = 1
+            denominator = 1.0
 
         #Add to the Matrix
         for dm in own_domains:

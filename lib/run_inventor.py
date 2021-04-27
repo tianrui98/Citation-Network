@@ -14,7 +14,7 @@ def RunInventor (df,inventors_dict, df_whole, save_path, save_path_master, endye
     WriteLog (save_path_master,'8', parameters)
 
     if inventors_dict == None:
-        var_pt = input("Do you want to create a new patent-inventor dictionary? (Y/N): ")
+        var_pt = input("Do you want to create a new patent-inventor dictionary? (Y/N): ").strip().upper()
         if var_pt == "Y":
             print("Creating patent-inventor dictionary...")
             inventors_dict = CreateInventorDictionary(df_whole)
@@ -41,7 +41,7 @@ def RunInventor (df,inventors_dict, df_whole, save_path, save_path_master, endye
     if len(unknown) > 0:
         SaveUnknownPatentsInventor (unknown,save_path)
         print(str(len(unknown)) + " patents have no match in current dataset. List exported to Output folder.")
-        proceed_pt = input("Do you want to save the matrix with incomplete data?(Y/N): ")
+        proceed_pt = input("Do you want to save the matrix with incomplete data?(Y/N): ").strip().upper()
  
     elif len(unknown) == 0:
         print("All the cited patents have been assigned inventors.")
@@ -66,7 +66,7 @@ def RunInventor (df,inventors_dict, df_whole, save_path, save_path_master, endye
             if len(unknown) > 0:
                 SaveUnknownPatentsInventor (unknown,save_path_master)
                 print(str(len(unknown)) + " patents have no match in current dataset. List exported to Output folder.")
-                proceed_pt = input("Do you want to save the matrix with incomplete data?(Y/N): ")
+                proceed_pt = input("Do you want to save the matrix with incomplete data?(Y/N): ").strip().upper()
 
             elif len(unknown) == 0:
                 print("All the cited patents have been assigned inventors.")

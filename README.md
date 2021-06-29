@@ -9,4 +9,4 @@ This program generates citation network from patent data obtained from Orbit Int
 4. Follow prompts to load data
 
 ## How to analyse the network
-Load the output node list and edge list into Gephi or Cytoscape
+From the "output" folder, load the output node list and edge list into Gephi or Cytoscape to visualize the network

@@ -5,7 +5,7 @@ This program generates citation network from patent data obtained from Orbit Int
 ## How to run the program
 1. Download data from Orbit Intelligence
 2. Locate the folder in terminal
-3. Execute ```make.py```
+3. Execute ```network.py```
 4. Follow prompts to load data
 
 ## How to analyse the network

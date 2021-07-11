@@ -5,8 +5,11 @@ This program generates citation network from patent data obtained from Orbit Int
 please execute the following commands before running the program
 
 ```pip install pickle```
+
 ```pip install seaborn```
+
 ```pip install matplotlib```
+
 ```pip install networkx```
 
 ## How to run the program

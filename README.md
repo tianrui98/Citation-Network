@@ -19,7 +19,7 @@ please execute the following commands before running the program
 4. Follow prompts to load data
 
 ## How to analyse the network
-From the "output" folder, load the output node list and edge list into Gephi or Cytoscape to visualize the network
+From the "output" folder, import the output node list and edge list into Gephi or Cytoscape to visualize the network
 
 ## Step-by-step guide
 Please contact the author at tianrui_zhu@u.yale-nus.edu.sg for a complete guide

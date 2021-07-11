@@ -115,7 +115,7 @@ def RunInventor_test (df,inventors_dict, df_whole, save_path, save_path_master, 
         elif var_pt == "N":  
             dict_name = input("Provide the path to the existing dictionary with extension? :")
             dict_path = os.path.abspath(dict_name)
-            if os.path.exists(dict_path) == True:
+            if os.path.exists(dict_path):
                 inventors_dict = LoadInventorsDictionary(dict_path)
             else:
                 sys.exit("Cannot find the dictionary.")
@@ -164,7 +164,6 @@ def RunInventor_test (df,inventors_dict, df_whole, save_path, save_path_master, 
                 proceed_pt = "Y"
         else:
             sys.exit("Cannot find the dataset.")
-            proceed_pt = "N"
 
     return matrix_update, inventors_dict,inventor_setting
 

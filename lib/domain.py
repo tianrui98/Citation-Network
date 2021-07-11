@@ -22,9 +22,9 @@ def CreateDomainDictionary (df):
     family_list=[]
     family_domains = []
 
-    for index, row in df.iterrows():
-        fmls = row['Publication numbers'].split('\n')
-        domain = row['Technology domains']
+    for i in range(len(df)):
+        fmls = df.loc[i,'Publication numbers'].split('\n')
+        domain = df.loc[i,'Technology domains']
         for l in fmls:
             member_patent = l.split(' ')[0]
             family_list.append(member_patent)
@@ -60,15 +60,16 @@ def MatchExistingPatents (df,dm_dict,matrix,endyear, normalize):
     domain_count = {}
     for dm in dms_ls:
         domain_count[dm]= 0
-    
+
     exist_pt = dm_dict.keys()
     all_unknowns = []
-    for index, row in df.iterrows():
-        own_domains = row['Technology domains'].split('\n')
+
+    for i in range(len(df)):
+        own_domains = df.loc[i,'Technology domains'].split('\n')
         cited_domains=[]
         unknown_patents = []
         known_patents = []
-        cited_ls = row['Cited patents - Standardized publication number']
+        cited_ls = df.loc[i,'Cited patents - Standardized publication number']
         cited_items_raw = cited_ls.split('\n')
         cited_items_trimmed =[]
     
@@ -90,10 +91,10 @@ def MatchExistingPatents (df,dm_dict,matrix,endyear, normalize):
 
         #a copy of df is created to avoid SettingWithCopyWarning
         df = df.copy()
-        df.loc[index, 'unknown_patents_domain'] = ','.join(unknown_uq)
+        df.loc[i, 'unknown_patents_domain'] = ','.join(unknown_uq)
         
         if normalize == "Y":
-            year = row['datetime'].year
+            year = df.loc[i,'datetime'].year
             denominator = float(endyear- year) +1.0
         else:
             denominator = 1.0

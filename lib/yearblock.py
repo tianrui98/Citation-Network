@@ -32,7 +32,7 @@ def YearSegment (df,earliest,latest,num,size,maxyear) :
     for i in range(0,num):
         start = year_to_datetime(startyear)
         end = year_to_datetime(endyear)
-        slice = df.loc[(df['datetime'] >= start) & (df['datetime'] < end)]
+        slice = df.loc[(df['datetime'] >= start) & (df['datetime'] < end)].reset_index(drop = True)
         describe = str(startyear)+"to"+ str(endyear-1)
         year_blocks.append((describe,slice))
         startyear += size

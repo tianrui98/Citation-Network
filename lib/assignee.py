@@ -13,11 +13,11 @@ def CreateAssigneeMatrix (df, setting = None):
     assignees_dict = {}
     assignees= []
 
-    for index, row in df.iterrows():   
-        asn_list = row['Current assignees'].split('\n')
+    for i in range(len(df)):
+        asn_list = df.loc[i,'Current assignees'].split('\n')
         if asn_list[0] != 'nan':
             for a in asn_list:
-                citation = len(row['Citing patents - Standardized publication number'].split('\n'))
+                citation = len(df.loc[i,'Citing patents - Standardized publication number'].split('\n'))
                 if a not in assignees_dict.keys():
                     assignees_dict[a] = [citation]
                     assignees.append(a)
@@ -130,12 +130,12 @@ def MatchExistingPatentsAssignee (df,matrix,input_analysis,endyear, normalize):
         direction = "Citing"
         EAfilter = '-APPLICANT'
 
-    for index, row in df.iterrows():
-        own_assignees = row['Current assignees'].split('\n')
-        own_assignees_IPC = row ['Main IPC']
-        own_assignees_CPC = row ['Main CPC']
+    for i in range(len(df)):
+        own_assignees = df.loc[i,'Current assignees'].split('\n')
+        own_assignees_IPC = df.loc[i,'Main IPC']
+        own_assignees_CPC = df.loc[i,'Main CPC']
         col_name = direction +' patents - Applicant/assignee'+ EAfilter
-        cited_ls = row[col_name]
+        cited_ls = df.loc[i,col_name]
         cited_items_raw = cited_ls.split('\n')     
         cited_items_trimmed =[]
         for item in cited_items_raw:
@@ -143,7 +143,7 @@ def MatchExistingPatentsAssignee (df,matrix,input_analysis,endyear, normalize):
         cited_assignees_set = list(set(cited_items_trimmed))
 
         if normalize == "Y":
-            year = row['datetime'].year
+            year = df.loc[i,'datetime'].year
             denominator = float(endyear- year) +1.0
         else:
             denominator = 1.0

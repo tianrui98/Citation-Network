@@ -12,11 +12,11 @@ def CreateInventorMatrix (df, setting = None):
     matrix = {}
     inventors_dict = {}
     inventors= []
-    for index, row in df.iterrows():   
-        inventor_list = row['Inventors'].split('\n')
+    for i in range(len(df)):
+        inventor_list = df.loc[i,'Inventors'].split('\n')
         if inventor_list[0] != 'nan':
             for a in inventor_list:
-                citation = len(row['Citing patents - Standardized publication number'].split('\n'))
+                citation = len(df.loc[i,'Citing patents - Standardized publication number'].split('\n'))
                 if a not in inventors_dict.keys():
                     inventors_dict[a] = [citation]
                     inventors.append(a)
@@ -102,9 +102,9 @@ def CreateInventorDictionary (df):
     family_list=[]
     family_inventors = []
 
-    for index, row in df.iterrows():
-        fmls = row['Publication numbers'].split('\n')
-        inventors = row['Inventors']
+    for i in range(len(df)):
+        fmls = df.loc[i,'Publication numbers'].split('\n')
+        inventors = df.loc[i,'Inventors']
         for l in fmls:
             member_patent = l.split(' ')[0]
             family_list.append(member_patent)
@@ -139,12 +139,12 @@ def MatchExistingPatentsInventor (df,inventors_dict,matrix,endyear, normalize):
     
     exist_pt = inventors_dict.keys()
     all_unknowns = []
-    for index, row in df.iterrows():
-        own_inventors = row['Inventors'].split('\n')
+    for i in range(len(df)):
+        own_inventors = df.loc[i,'Inventors'].split('\n')
         cited_inventors=[]
         unknown_patents = []
         known_patents = []
-        cited_ls = row['Cited patents - Standardized publication number']
+        cited_ls = df.loc[i,'Cited patents - Standardized publication number']
         cited_items_raw = cited_ls.split('\n')
         cited_items_trimmed =[]
     
@@ -165,10 +165,10 @@ def MatchExistingPatentsInventor (df,inventors_dict,matrix,endyear, normalize):
 
         #a copy of df is created to avoid SettingWithCopyWarning
         df = df.copy()
-        df.loc[index, 'unknown_patents_inventor'] = ','.join(unknown_uq)
+        df.loc[i, 'unknown_patents_inventor'] = ','.join(unknown_uq)
         
         if normalize == "Y":
-            year = row['datetime'].year
+            year = df.loc[i,'datetime'].year
             denominator = float(endyear- year) +1.0
         else:
             denominator = 1.0

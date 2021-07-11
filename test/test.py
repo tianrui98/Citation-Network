@@ -12,7 +12,6 @@ warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 
 date = datetime.now().strftime("%d_%m_%Y_%H%M")
 
-# sys.path.append(os.path.abspath(os.path.join('..', 'lib')))
 #set the working directory to the folder containing the current script
 pathlib.Path(__file__).parent.absolute()
 #all outputs will be saved to the current folder

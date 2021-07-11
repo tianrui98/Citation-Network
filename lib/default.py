@@ -63,7 +63,7 @@ tech_fields = {'Electrical machinery, apparatus, energy':'Electrical Engineering
 
 #%% Decide the type of analysis and create an empty matrix (dictionary form)
 def AnalysisType ():
-    input_string = input("What analysis do you want to perform(enter numbers separated by ',''):"+
+    input_string = input("What analysis do you want to perform(enter numbers separated by ','):"+
     "\n1:Analyse the technology domains of cited patents"+
     "\n2:Analyse the assignees of cited patents"+
     "\n3:Analyse the assignees of cited patents (Examiner citations only)"+
